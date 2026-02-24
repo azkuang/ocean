@@ -64,6 +64,7 @@ void calcGrid(int dim, double a[dim][dim]) {
   double (*t)[dim] = malloc(sizeof(double[dim][dim]));
   memcpy(t, a, (size_t)dim * dim * sizeof(int));
 
+  #pragma omp parallel for
   for (int row = 1; row < dim - 1; row++) {
     for (int col = 1; col < dim - 1; col++) {
       int value = (a[row][col] + a[row - 1][col] + a[row + 1][col] +  a[row][col + 1] + a[row][col - 1]) / 5;
