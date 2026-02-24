@@ -62,17 +62,17 @@ void initGrid(const char *infile, int dim, double a[dim][dim]) {
 
 void calcGrid(int dim, double a[dim][dim]) {
   double (*t)[dim] = malloc(sizeof(double[dim][dim]));
-  memcpy(t, a, (size_t)dim * dim * sizeof(int));
+  memcpy(t, a, (size_t)dim * dim * sizeof(double));
 
   #pragma omp parallel for
   for (int row = 1; row < dim - 1; row++) {
     for (int col = 1; col < dim - 1; col++) {
-      int value = (a[row][col] + a[row - 1][col] + a[row + 1][col] +  a[row][col + 1] + a[row][col - 1]) / 5;
+      double value = (a[row][col] + a[row - 1][col] + a[row + 1][col] +  a[row][col + 1] + a[row][col - 1]) / 5;
       t[row][col] = value; 
     }
   }
 
-  memcpy(a, t, (size_t)dim * dim * sizeof(int));
+  memcpy(a, t, (size_t)dim * dim * sizeof(double));
   free(t);
 }
 
